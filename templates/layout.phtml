@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<title>Exercice auth MVC</title>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					<li>
+						<a href="index.php?route=connexion">Connexion</a>
+					</li>
+					<li>
+					    <a href="index.php?route=inscription">Inscription</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<?php
+		// Inclusion des templates en fonction de la valeur de $route
+			if (isset($route)) 
+			{
+				if ($route === 'connexion') 
+				{
+					require 'templates/connexion.phtml';
+				} 
+				else if ($route === 'inscription') 
+				{
+					require 'templates/register.phtml';
+				} 
+				else if ($route === 'spacePerso')
+				{
+				    require 'templates/space-perso.phtml';
+				}
+				else if ($route === 'notFound')
+				{
+					require 'templates/notFound.phtml';
+				}
+			}
+		?>
+	</body>
+</html>
