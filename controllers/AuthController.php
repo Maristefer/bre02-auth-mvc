@@ -9,6 +9,7 @@ class AuthController
     public function connexion(): void
     {
          $route = "connexion";
+         
          require "templates/layout.phtml";
     }
     
@@ -28,7 +29,6 @@ class AuthController
             if (password_verify($password, $user->getPassword())) 
             {
                 // 4. Si tout est bon, stocker dans $_SESSION le fait que l'utilisateur soit connecté
-                session_start();
                 $_SESSION['user_id'] = $user->getId();
                 $_SESSION['email'] = $user->getEmail();
                 

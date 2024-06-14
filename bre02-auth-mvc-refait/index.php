@@ -1,7 +1,9 @@
 <?php
+
 session_start();
 
 require_once "config/autoload.php";
+
 
 
 // Initialiser le routeur et gérer la requête

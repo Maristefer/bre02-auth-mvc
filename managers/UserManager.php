@@ -1,11 +1,16 @@
 <?php
 
-require_once "managers/AbstractManager.php";
-require_once "models/User.php";
+/*require_once "managers/AbstractManager.php";
+require_once "models/User.php";*/
 
 //permet de créer et récupérer des utilisateurs
 class UserManager extends AbstractManager
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     public function createUser($first_name, $last_name, $email, $password): void
     {
         $query = $this->pdo->prepare("INSERT INTO users (id, first_name, last_name, email, password) VALUES (NULL, :first_name, :last_name, :email, :password)");
@@ -23,18 +28,28 @@ class UserManager extends AbstractManager
         //$this->pdo : Fait référence à la connexion PDO à la base de données, héritée de AbstractManager
         //La requête SQL sélectionne toutes les colonnes de la table users où le email correspond au paramètre nommé :email.
         $query = $this->pdo->prepare("SELECT * FROM users WHERE email = :email");
-        $query->execute([':email' => $email]);
+        
+        $parameters = [
+            "email" => $email
+            ];
+            
+        $query->execute($parameters);
+        
         $data = $query->fetch(PDO::FETCH_ASSOC); /*fetch(PDO::FETCH_ASSOC) : Récupère le prochain résultat de la requête sous forme de tableau associatif. 
         Chaque colonne de la table devient une clé du tableau.*/
 
-        if ($data) 
+        if ($data !== null) 
         { //Vérifie si des données ont été trouvées (si $data n'est pas vide ou false).
             
-            //Si des données ont été trouvées, crée et retourne un nouvel objet User en utilisant les données récupérées 
-            return new User($data['id'], $data['first_name'], $data['last_name'], $data['email'], $data['password']);
+            //Si des données ont été trouvées, un nouvel objet User en utilisant les données récupérées 
+            $item = new User($data['id'], $data['first_name'], $data['last_name'], $data['email'], $data['password']);
+            $item->setId($data["id"]);
         }
-        return null; //Si aucune donnée n'a été trouvée (aucun utilisateur avec ce username), retourne null.
-    
-        var_dump($this->data);
+        else
+        {
+            $item = new User("", "", "", "", "");
+        }
+        
+        return $item;
     }
 }

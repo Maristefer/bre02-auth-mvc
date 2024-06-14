@@ -23,15 +23,11 @@
 			{
 				if ($route === 'connexion') 
 				{
-					require 'templates/connexion.phtml';
+					require 'templates/login.phtml';
 				} 
-				else if ($route === 'inscription') 
+				else if ($route === 'space-perso')
 				{
-					require 'templates/register.phtml';
-				} 
-				else if ($route === 'spacePerso')
-				{
-				    require 'templates/spacePerso.phtml';
+				    require 'templates/space-perso.phtml';
 				}
 				else if ($route === 'notFound')
 				{
